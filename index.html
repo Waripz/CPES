@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CPES - Login</title>
+    <link rel="icon" type="image/png" href="letter-w.png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        /* ===== HEADER (Kept) ===== */
+        .header {
+            background-color: #e0e0e0;
+            padding: 15px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            z-index: 10;
+        }
+
+        .header img {
+            height: 50px;
+            margin-right: 10px;
+        }
+
+        .header span {
+            color: rgb(0, 0, 0);
+            font-size: 25px;
+            font-weight: bold;
+            display: flex;
+            flex-direction: column;
+            line-height: 0.5;
+        }
+
+        .header .university-name {
+            font-size: 19px;
+            font-weight: normal;
+        }
+
+        /* ===== MAIN CONTENT - Aurora/Mesh Gradient ===== */
+        .main-content {
+            flex: 1;
+            position: relative;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 5%;
+            overflow: hidden;
+
+            /* Aurora Mesh Gradient Background */
+            background:
+                radial-gradient(ellipse at 0% 0%, rgba(120, 0, 255, 0.4) 0%, transparent 50%),
+                radial-gradient(ellipse at 100% 0%, rgba(0, 150, 255, 0.3) 0%, transparent 50%),
+                radial-gradient(ellipse at 100% 100%, rgba(200, 0, 255, 0.35) 0%, transparent 50%),
+                radial-gradient(ellipse at 0% 100%, rgba(0, 100, 200, 0.3) 0%, transparent 50%),
+                linear-gradient(160deg, #0f0c29 0%, #1a1a3e 25%, #24243e 50%, #1a1a3e 75%, #0f0c29 100%);
+            background-size: 200% 200%, 200% 200%, 200% 200%, 200% 200%, 100% 100%;
+            animation: auroraShift 15s ease-in-out infinite;
+        }
+
+        @keyframes auroraShift {
+
+            0%,
+            100% {
+                background-position: 0% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 0%;
+            }
+
+            25% {
+                background-position: 50% 50%, 50% 0%, 100% 50%, 0% 50%, 0% 0%;
+            }
+
+            50% {
+                background-position: 100% 100%, 0% 100%, 0% 0%, 100% 0%, 0% 0%;
+            }
+
+            75% {
+                background-position: 50% 0%, 100% 50%, 50% 100%, 50% 50%, 0% 0%;
+            }
+        }
+
+        /* Floating orbs for depth */
+        .main-content::before,
+        .main-content::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.5;
+            z-index: 0;
+            animation: floatOrb 20s ease-in-out infinite;
+        }
+
+        .main-content::before {
+            width: 500px;
+            height: 500px;
+            background: rgba(138, 43, 226, 0.4);
+            top: -100px;
+            left: -100px;
+        }
+
+        .main-content::after {
+            width: 400px;
+            height: 400px;
+            background: rgba(0, 191, 255, 0.3);
+            bottom: -50px;
+            right: -50px;
+            animation-delay: -10s;
+        }
+
+        @keyframes floatOrb {
+
+            0%,
+            100% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            33% {
+                transform: translate(30px, -30px) scale(1.05);
+            }
+
+            66% {
+                transform: translate(-20px, 20px) scale(0.95);
+            }
+        }
+
+        /* ===== TWO COLUMN LAYOUT ===== */
+        .login-container {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 80px;
+            max-width: 1100px;
+            width: 100%;
+        }
+
+        /* ===== LEFT SIDE - BRAND ===== */
+        .brand-section {
+            flex: 1;
+            color: white;
+        }
+
+        .brand-title {
+            margin-bottom: 20px;
+        }
+
+        .brand-title .main-text {
+            font-size: 4.5rem;
+            font-weight: 900;
+            line-height: 1;
+            letter-spacing: -2px;
+            background: linear-gradient(135deg, #ffffff 0%, #a78bfa 50%, #818cf8 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: block;
+        }
+
+        .brand-title .sub-text {
+            font-size: 2.8rem;
+            font-weight: 700;
+            line-height: 1.1;
+            background: linear-gradient(135deg, #c4b5fd 0%, #a5b4fc 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: block;
+            margin-top: 5px;
+        }
+
+        .tagline {
+            font-size: 1.25rem;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.7);
+            margin-top: 20px;
+            letter-spacing: 0.5px;
+        }
+
+        .tagline span {
+            color: #a78bfa;
+            font-weight: 600;
+        }
+
+        /* ===== RIGHT SIDE - GLASSMORPHISM LOGIN CARD ===== */
+        .login-card {
+            width: 420px;
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 45px 40px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow:
+                0 8px 32px rgba(0, 0, 0, 0.3),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+        }
+
+        .login-card h2 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 8px;
+        }
+
+        .login-card .subtitle {
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 30px;
+        }
+
+        /* Form Styling */
+        .form-group {
+            margin-bottom: 22px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.85);
+            margin-bottom: 8px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 16px 18px;
+            font-size: 1rem;
+            font-family: 'Poppins', sans-serif;
+            color: white;
+            background: rgba(255, 255, 255, 0.08);
+            border: 2px solid rgba(255, 255, 255, 0.15);
+            border-radius: 14px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .form-group input:focus {
+            border-color: #818cf8;
+            background: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 0 0 4px rgba(129, 140, 248, 0.2);
+        }
+
+        /* CTA Button */
+        .btn-login {
+            width: 100%;
+            padding: 16px;
+            font-size: 1.05rem;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+            color: white;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            border: none;
+            border-radius: 14px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+        }
+
+        .btn-login:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.5);
+            background: linear-gradient(135deg, #818cf8 0%, #a78bfa 100%);
+        }
+
+        .btn-login:active {
+            transform: translateY(-1px);
+        }
+
+        /* Reset Password Link */
+        .forgot-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .forgot-link:hover {
+            color: #a78bfa;
+        }
+
+        /* ===== FOOTER (Kept) ===== */
+        .footer {
+            background-color: #e0e0e0;
+            padding: 15px 0;
+            text-align: center;
+            width: 100%;
+            color: #555;
+            font-size: 0.9em;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* ===== MESSAGE BOX ===== */
+        .message-box {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            font-weight: 500;
+            z-index: 1001;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateX(100%);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(10px);
+        }
+
+        .message-box.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(0);
+        }
+
+        .message-box.success {
+            background: rgba(16, 185, 129, 0.9);
+            color: white;
+        }
+
+        .message-box.error {
+            background: rgba(239, 68, 68, 0.9);
+            color: white;
+        }
+
+        /* ===== SUCCESS OVERLAY ===== */
+        .success-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #0f0c29 0%, #1a1a3e 40%, #302b63 70%, #24243e 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .success-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .success-overlay::before {
+            content: '';
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.3) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: pulseGlow 2s ease-in-out infinite;
+        }
+
+        @keyframes pulseGlow {
+
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: 0.5;
+            }
+
+            50% {
+                transform: scale(1.1);
+                opacity: 0.8;
+            }
+        }
+
+        .success-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            animation: slideUp 0.6s ease-out 0.2s both;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .success-icon {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 30px;
+            box-shadow: 0 10px 40px rgba(16, 185, 129, 0.4);
+            animation: scaleIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.3s both;
+        }
+
+        @keyframes scaleIn {
+            from {
+                transform: scale(0);
+            }
+
+            to {
+                transform: scale(1);
+            }
+        }
+
+        .success-icon svg {
+            width: 50px;
+            height: 50px;
+            stroke: white;
+            stroke-width: 3;
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .success-icon svg .checkmark {
+            stroke-dasharray: 50;
+            stroke-dashoffset: 50;
+            animation: drawCheck 0.5s ease-out 0.6s forwards;
+        }
+
+        @keyframes drawCheck {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+
+        .success-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, #ffffff 0%, #a78bfa 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .success-message {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 30px;
+        }
+
+        .loading-dots {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+        }
+
+        .loading-dots span {
+            width: 10px;
+            height: 10px;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            border-radius: 50%;
+            animation: bounce 1.4s infinite ease-in-out both;
+        }
+
+        .loading-dots span:nth-child(1) {
+            animation-delay: -0.32s;
+        }
+
+        .loading-dots span:nth-child(2) {
+            animation-delay: -0.16s;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            80%,
+            100% {
+                transform: scale(0.6);
+                opacity: 0.5;
+            }
+
+            40% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 900px) {
+            .login-container {
+                flex-direction: column;
+                gap: 40px;
+                text-align: center;
+            }
+
+            .brand-section {
+                text-align: center;
+            }
+
+            .brand-title .main-text {
+                font-size: 3rem;
+            }
+
+            .brand-title .sub-text {
+                font-size: 2rem;
+            }
+
+            .login-card {
+                width: 100%;
+                max-width: 400px;
+            }
+        }
+
+        @media (max-width: 480px) {
+
+            /* Header */
+            .header {
+                padding: 10px 15px;
+                gap: 8px;
+            }
+
+            .header img {
+                height: 35px;
+                margin-right: 8px;
+            }
+
+            .header span {
+                font-size: 14px;
+                line-height: 1.2;
+            }
+
+            .header .university-name {
+                font-size: 11px;
+            }
+
+            /* Main Content */
+            .main-content {
+                padding: 20px 16px;
+            }
+
+            .login-container {
+                gap: 24px;
+            }
+
+            /* Brand */
+            .brand-title .main-text {
+                font-size: 2.2rem;
+                letter-spacing: -1px;
+            }
+
+            .brand-title .sub-text {
+                font-size: 1.4rem;
+            }
+
+            .tagline {
+                font-size: 0.9rem;
+                margin-top: 12px;
+            }
+
+            /* Login Card */
+            .login-card {
+                padding: 28px 20px;
+                border-radius: 18px;
+            }
+
+            .login-card h2 {
+                font-size: 1.4rem;
+                margin-bottom: 4px;
+            }
+
+            .login-card .subtitle {
+                font-size: 0.85rem;
+                margin-bottom: 20px;
+            }
+
+            .form-group {
+                margin-bottom: 16px;
+            }
+
+            .form-group label {
+                font-size: 0.8rem;
+                margin-bottom: 6px;
+            }
+
+            .form-group input {
+                padding: 12px 14px;
+                font-size: 0.9rem;
+                border-radius: 12px;
+            }
+
+            .btn-login {
+                padding: 12px;
+                font-size: 0.95rem;
+                border-radius: 12px;
+            }
+
+            .forgot-link {
+                font-size: 0.8rem;
+                margin-top: 16px;
+            }
+
+            /* Footer */
+            .footer {
+                padding: 12px 16px;
+                font-size: 0.75rem;
+            }
+
+            /* Message Box */
+            .message-box {
+                top: 0.5rem;
+                right: 0.5rem;
+                left: 0.5rem;
+                padding: 0.75rem 1rem;
+                font-size: 0.85rem;
+                transform: translateY(-100%);
+            }
+
+            .message-box.show {
+                transform: translateY(0);
+            }
+
+            /* Success Overlay Mobile */
+            .success-overlay::before {
+                width: 300px;
+                height: 300px;
+            }
+
+            .success-icon {
+                width: 80px;
+                height: 80px;
+                margin-bottom: 24px;
+            }
+
+            .success-icon svg {
+                width: 40px;
+                height: 40px;
+            }
+
+            .success-title {
+                font-size: 1.6rem;
+            }
+
+            .success-message {
+                font-size: 0.95rem;
+                padding: 0 20px;
+                margin-bottom: 24px;
+            }
+
+            .loading-dots span {
+                width: 8px;
+                height: 8px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- HEADER -->
+    <div class="header">
+        <img src="logo uthmm.png" alt="UTHM Logo" />
+        <span class="university-name">Universiti Tun Hussein Onn Malaysia</span>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+        <div class="login-container">
+            <!-- Left Side - Brand -->
+            <div class="brand-section">
+                <div class="brand-title">
+                    <span class="main-text">CAMPUS</span>
+                    <span class="sub-text">PRELOVED</span>
+                    <span class="sub-text">E-SHOP</span>
+                </div>
+                <p class="tagline">UTHM Community's Marketplace</p>
+            </div>
+
+            <!-- Right Side - Login Card -->
+            <div class="login-card">
+                <h2>Welcome</h2>
+                <p class="subtitle">Sign in using your matric number/username</p>
+
+                <form id="loginForm" action="login.php" method="post">
+                    <div class="form-group">
+                        <label for="matricNo">Matric Number / Username</label>
+                        <input type="text" id="matricNo" name="matricNo" placeholder="e.g. AI220123" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" placeholder="Enter your password"
+                            required />
+                    </div>
+
+                    <button type="submit" class="btn-login">Sign In</button>
+                    <a href="forgot_password.php" class="forgot-link">Reset Password?</a>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer">
+        © 2025 Campus Preloved E-shop. All rights reserved.
+    </div>
+
+    <!-- Message Box -->
+    <div id="messageBox" class="message-box"></div>
+
+    <!-- Success Overlay -->
+    <div id="successOverlay" class="success-overlay">
+        <div class="success-content">
+            <div class="success-icon">
+                <svg viewBox="0 0 24 24">
+                    <polyline class="checkmark" points="20 6 9 17 4 12"></polyline>
+                </svg>
+            </div>
+            <h2 class="success-title">Welcome back!</h2>
+            <p class="success-message">Taking you to your dashboard...</p>
+            <div class="loading-dots">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const loginForm = document.getElementById('loginForm');
+            const messageBox = document.getElementById('messageBox');
+
+            function showMessage(message, type) {
+                messageBox.textContent = message;
+                messageBox.className = 'message-box show ' + type;
+                setTimeout(() => {
+                    messageBox.classList.remove('show');
+                }, 3000);
+            }
+
+            loginForm.addEventListener('submit', async function (event) {
+                event.preventDefault();
+
+                const formData = new FormData(loginForm);
+                const matricNo = formData.get('matricNo');
+                const password = formData.get('password');
+
+                if (!matricNo || !password) {
+                    showMessage('Please enter both matric number and password.', 'error');
+                    return;
+                }
+
+                try {
+                    const response = await fetch(loginForm.action, {
+                        method: 'POST',
+                        body: formData
+                    });
+                    const result = await response.json();
+
+                    if (result.success) {
+                        // Show modern success overlay
+                        const successOverlay = document.getElementById('successOverlay');
+                        successOverlay.classList.add('show');
+
+                        // Redirect after animation completes
+                        setTimeout(() => {
+                            window.location.href = result.redirect;
+                        }, 2000);
+                    } else {
+                        showMessage('Login failed: ' + result.message, 'error');
+                    }
+                } catch (error) {
+                    console.error('Error during login fetch:', error);
+                    showMessage('An unexpected error occurred. Please try again later.', 'error');
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

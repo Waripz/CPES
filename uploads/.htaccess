@@ -1,0 +1,30 @@
+# ============================================
+# SECURITY FOR UPLOAD FOLDER
+# ============================================
+
+# Disable PHP execution completely
+<FilesMatch "\.ph(p[3-7]?|tml|ps)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Only allow specific file types
+<FilesMatch "(?i)\.(jpg|jpeg|png|gif|webp|pdf|doc|docx)$">
+    Order allow,deny
+    Allow from all
+</FilesMatch>
+
+# Disable script execution
+Options -ExecCGI
+AddHandler cgi-script .php .php3 .php4 .php5 .phtml .pl .py .jsp .asp .htm .shtml .sh .cgi
+
+# Remove handler for PHP files
+<FilesMatch "\.(php|phtml|php3|php4|php5|php7)$">
+    SetHandler none
+    SetHandler default-handler
+    Options -ExecCGI
+    RemoveHandler .php .phtml .php3 .php4 .php5 .php7
+</FilesMatch>
+
+# Disable directory listing
+Options -Indexes

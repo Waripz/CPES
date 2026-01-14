@@ -1,0 +1,38 @@
+# E-Kedai - Files to ignore in Git
+
+# Configuration (PENTING - jangan upload ke Git!)
+config.php
+
+# Logs
+logs/*.log
+logs/error.log
+
+# Uploads (optional - depend on your needs)
+uploads/avatars/*
+uploads/chat/*
+uploads/items/*
+uploads/memos/*
+uploads/memo_attachments/*
+
+# Keep upload folder structure
+!uploads/avatars/.gitkeep
+!uploads/chat/.gitkeep
+!uploads/items/.gitkeep
+!uploads/memos/.gitkeep
+!uploads/memo_attachments/.gitkeep
+
+# System files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# IDE
+.vscode/
+.idea/
+*.sublime-*
+
+# Temporary files
+*.tmp
+*.bak
+*.backup
