@@ -1,14 +1,12 @@
 <?php
-session_start();
+require_once 'config.php';
+adminSecureSessionStart();
 
 // 1. Security
 if (!isset($_SESSION['AdminID']) || $_SESSION['role'] !== 'admin') {
     header('Location: admin_login.php');
     exit;
 }
-
-// 2. Database
-require_once 'config.php';
 try {
     $pdo = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME, DB_USER, DB_PASS);
     require_once 'admin_functions.php';

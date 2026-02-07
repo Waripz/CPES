@@ -1,14 +1,14 @@
 <?php
-session_start();
+require_once 'config.php';
+adminSecureSessionStart();
+
 if (!isset($_SESSION['AdminID']) || $_SESSION['role'] !== 'admin') { header('Location: admin_login.php'); exit; }
 
-try {
-    $pdo = new PDO("mysql:host=127.0.0.1;dbname=ekbtk", "root", "");
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (Exception $e) { die("DB Error"); }
+$pdo = getDBConnection();
 
-// For sidebar badge
+// For sidebar badges
 $pendingItemsCount = $pdo->query("SELECT COUNT(*) FROM item WHERE status = 'under_review'")->fetchColumn();
+$unopenedReportsCount = $pdo->query("SELECT COUNT(*) FROM report WHERE is_opened = 0 OR is_opened IS NULL")->fetchColumn();
 
 // Ensure activity_log table exists
 try {
@@ -102,7 +102,7 @@ try {
     }
     $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (Exception $e) {}
-function h($v){ return htmlspecialchars($v ?? '', ENT_QUOTES, 'UTF-8'); }
+if (!function_exists('h')) { function h($v){ return htmlspecialchars($v ?? '', ENT_QUOTES, 'UTF-8'); } }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -524,10 +524,17 @@ function h($v){ return htmlspecialchars($v ?? '', ENT_QUOTES, 'UTF-8'); }
                     <a href="admin_reports.php" class="nav-link">
                         <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h14a2 2 0 0 0 2-2V7l-5-5H6a2 2 0 0 0-2 2v4"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="m3 15 2 2 4-4"/></svg>
                         Reports
+                        <?php if ($unopenedReportsCount > 0): ?>
+                        <span class="nav-badge"><?= $unopenedReportsCount ?></span>
+                        <?php endif; ?>
                     </a>
                     <a href="admin_memo.php" class="nav-link">
                         <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" x2="8" y1="13" y2="13"/><line x1="16" x2="8" y1="17" y2="17"/><line x1="10" x2="8" y1="9" y2="9"/></svg>
                         Memos
+                    </a>
+                    <a href="admin_activity_log.php" class="nav-link">
+                        <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+                        Activity Log
                     </a>
                 </div>
             </nav>

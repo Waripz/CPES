@@ -1,14 +1,12 @@
 <?php
-session_start();
+require_once 'config.php';
+adminSecureSessionStart();
+
 if (!isset($_SESSION['AdminID']) || $_SESSION['role'] !== 'admin') { header('Location: admin_login.php'); exit; }
 
-require_once 'config.php';
-try {
-    $pdo = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME, DB_USER, DB_PASS);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    require_once 'admin_functions.php';
-    ensureActivityLogTable($pdo);
-} catch (Exception $e) { die("DB Error"); }
+$pdo = getDBConnection();
+require_once 'admin_functions.php';
+ensureActivityLogTable($pdo);
 
 // For sidebar badge
 $pendingItemsCount = $pdo->query("SELECT COUNT(*) FROM item WHERE status = 'under_review'")->fetchColumn();
