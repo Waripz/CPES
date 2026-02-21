@@ -2,6 +2,7 @@
 
 # Configuration (PENTING - jangan upload ke Git!)
 config.php
+.env
 
 # Logs
 logs/*.log
